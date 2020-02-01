@@ -1,6 +1,7 @@
 {
   "name": "test",
   "version": "1.0.0",
+  "homepage": "./",
   "main": "index.js",
   "dependencies": {
     "@vkontakte/icons": "^1.15.1",
@@ -8,6 +9,7 @@
     "@vkontakte/vkui": "^3.0.0",
     "@vkontakte/vkui-connect-promise": "^0.2.1",
     "cross-env": "^7.0.0",
+    "gh-pages": "^2.2.0",
     "react": "^16.12.0",
     "react-bootstrap-table": "^4.3.1",
     "react-dom": "^16.12.0",
@@ -17,7 +19,9 @@
   "scripts": {
     "start": "cross-env HTTPS=true react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test", 
+	"predeploy": "npm run build",
+	"deploy": "gh-pages -d build"
   },
   "author": "",
   "license": "ISC",
@@ -33,5 +37,13 @@
       "last 1 safari version"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BroPWNZ/journal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BroPWNZ/journal/issues"
+  },
+  "homepage": "https://github.com/BroPWNZ/journal#readme",
   "description": ""
 }
