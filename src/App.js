@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View, Epic, Tabbar, TabbarItem, Panel } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import connect from '@vkontakte/vkui-connect-promise';
+import connect from '@vkontakte/vkui-connect';
 
 import Icon28ArticleOutline from '@vkontakte/icons/dist/28/article_outline'
 import Icon28Users from '@vkontakte/icons/dist/28/users'
@@ -26,14 +26,26 @@ class App extends React.Component {
         super(props)
         this.state={
 			activePanel: "home",
-			
+			fetchedUser: null
 			}
     }
 	
+	componentDidMount() {
+		connect.subscribe((e) => {
+			switch (e.detail.type) {
+				case 'VKWebAppGetUserInfoResult':
+					this.setState({ fetchedUser: e.detail.data });
+					break;
+				default:
+					console.log(e.detail.type);
+			}
+		});
+		connect.send('VKWebAppGetUserInfo', {});
+	}
 		
 	go = e => {
 		this.setState({activePanel: e.currentTarget.dataset.to})
-		this.setState({activeTab: e.currentTarget.dataset.to})
+		
 	}
 	
     render() {
@@ -41,7 +53,7 @@ class App extends React.Component {
             <View activePanel={this.state.activePanel} >
 					<Info id="info" go={this.go} />
 					<Home id="home" go={this.go} />
-					<Calc id="calc" go={this.go} />
+					<Calc id="calc" fetchedUser={this.state.fetchedUser} go={this.go} />
 					<Add id="add" go={this.go} />
 					<MyGroup id="mygroup" go={this.go} />
 					<PassGroup id="passgroup" go={this.go} />
